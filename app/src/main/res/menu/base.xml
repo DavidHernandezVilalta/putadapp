@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/trucar"
+        android:icon="@drawable/ic_call_black_24dp"
+        app:showAsAction="always"
+        android:title="item 1"></item>
+    <item
+        android:id="@+id/chrome"
+        android:icon="@drawable/ic_chrome"
+        app:showAsAction="always"
+        android:title="item 1"></item>
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/toastejar"
+            android:title="Toast"
+            android:checked="true"/>
+
+        <item android:id="@+id/estatejar"
+            android:title="Estado"
+            android:checked="false"/>
+    </group>
+</menu>
+
