@@ -147,7 +147,7 @@ public class Calculator extends BaseActivity implements View.OnClickListener {
     }
 
     protected Boolean hihazero = false, hihacoma = false, hihaop = false, toastejo = true;
-    protected String num1 = null, num2 = null, simbol = null;
+    protected String num1 = null, num2 = null, simbol = null, ans = null;
 
     private void guardarnumero(String s) {
         if (s.equals("num1")) num1 = ops.getText().toString();
@@ -202,7 +202,6 @@ public class Calculator extends BaseActivity implements View.OnClickListener {
                     if (num1.equals("Infinity")) {
                         res.setText("--> ∞");
                         if (toastejo){
-                            Log.v("MainActivity", "entroooooooooooooooo");
                             Toast.makeText(getApplicationContext(), "Ets de magisteri o que?", Toast.LENGTH_LONG).show();
                         }
                         else {
@@ -213,7 +212,7 @@ public class Calculator extends BaseActivity implements View.OnClickListener {
                             // un Builder/contructor.
                             NotificationCompat.Builder mBuilder =
                                     (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-                                            .setSmallIcon(R.drawable.blackgirl)
+                                            .setSmallIcon(R.drawable.ic_calculator)
                                             .setContentTitle("You stupid")
                                             .setContentText("Why dividing by 0?");
                             // Creamos un intent explicito, para abrir la app desde nuestra notificación
@@ -249,7 +248,10 @@ public class Calculator extends BaseActivity implements View.OnClickListener {
                         res.setText(num1);
                     }
                     if (!s.equals("="))ops.setText(s);
-                    else ops.setText("");
+                    else {
+                        ops.setText("");
+                        ans = num1;
+                    }
                     simbol = s;
                 }
             }
@@ -389,8 +391,14 @@ public class Calculator extends BaseActivity implements View.OnClickListener {
                 hihaop = false;
                 break;
             case R.id.ans:
-                Log.e("MainActivity", "entro1");
-                if (num1 != null&&!num1.isEmpty()) ops.append(num1);
+                if (ans != null&&!ans.isEmpty()){
+                    if (hihazero||hihaop) {
+                        if (ops.getText().toString().equals(null)||ops.getText().toString().equals(simbol)) ops.setText(ans);
+                        else ops.append(ans);
+                        hihazero = false;
+                    }
+                    else ops.append(ans);
+                }
                 break;
         }
     }

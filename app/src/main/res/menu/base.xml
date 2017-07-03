@@ -5,12 +5,12 @@
         android:id="@+id/trucar"
         android:icon="@drawable/ic_call_black_24dp"
         app:showAsAction="always"
-        android:title="item 1"></item>
+        android:title="Call"></item>
     <item
         android:id="@+id/chrome"
         android:icon="@drawable/ic_chrome"
         app:showAsAction="always"
-        android:title="item 1"></item>
+        android:title="Chrome"></item>
     <group android:checkableBehavior="single">
         <item android:id="@+id/toastejar"
             android:title="Toast"

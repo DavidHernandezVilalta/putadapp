@@ -123,6 +123,32 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         return returnValue;
     }
 
+    public String queryUser(String s) {
+        Cursor c;
+        c = readable.query(MyDataBaseContract.Table1.TABLE_NAME,    //Table name
+                new String[] {MyDataBaseContract.Table1.USER},       //Columns we select
+                MyDataBaseContract.Table1.USER + " = ? ",             //Columns for the WHERE clause
+                new String[] {s},                                   //Values for the WHERE clause
+                null,                                               //Group By
+                null,                                               //Having
+                null);                                              //Sort
+
+        String returnValue = "Not found";
+
+        if (c.moveToFirst()) {
+            do {
+                //We go here if the cursor is not empty
+                long l = c.getLong(c.getColumnIndex(MyDataBaseContract.Table1.USER));
+                returnValue = String.valueOf(l);
+            } while (c.moveToNext());
+        }
+
+        //Always close the cursor after you finished using it
+        c.close();
+
+        return returnValue;
+    }
+
     @Override
     public synchronized void close() {
         super.close();

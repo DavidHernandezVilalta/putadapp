@@ -15,10 +15,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.davidhernandezvilaltagmail.projecte1.activities.Activity2;
-import com.davidhernandezvilaltagmail.projecte1.activities.Activity3;
+import com.davidhernandezvilaltagmail.projecte1.activities.Logout;
 import com.davidhernandezvilaltagmail.projecte1.activities.Calculator;
 
 public abstract class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -28,18 +27,17 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     NavigationView navigationView;
     ArrayMap <Integer, Class> m,n;
     private CharSequence mDrawerTitle, mTitle;
-    ImageView iv;
-    ClipData.Item settings;
 
 
     {
         m = new ArrayMap<>();
         m.put(R.id.activity2, Activity2.class);
-        m.put(R.id.activity3, Activity3.class);
+        m.put(R.id.activity3, Logout.class);
         m.put(R.id.calculator, Calculator.class);
 
     }
     final Context context = this;
+    ImageView iv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +54,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mTitle = mDrawerTitle = getTitle();
+
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,
                 toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {

@@ -14,9 +14,10 @@
                     android:checkable="true"
                     android:title="Activity2" />
                 <item
+                    android:icon="@drawable/ic_exit2"
                     android:id="@+id/activity3"
                     android:checkable="true"
-                    android:title="Activity3" />
+                    android:title="Logout" />
             </group>
         </menu>
     </item>
