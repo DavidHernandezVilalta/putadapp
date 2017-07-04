@@ -38,9 +38,9 @@
             android:name=".activities.Loginfail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.Signup"
+            android:name=".Signup"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.Mediaplayer"></activity>
+        <activity android:name=".activities.MediaPlayer"></activity>
     </application>
 
 </manifest>

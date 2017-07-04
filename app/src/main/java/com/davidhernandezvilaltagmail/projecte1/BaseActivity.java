@@ -1,6 +1,5 @@
 package com.davidhernandezvilaltagmail.projecte1;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +18,7 @@ import android.widget.ImageView;
 import com.davidhernandezvilaltagmail.projecte1.activities.Activity2;
 import com.davidhernandezvilaltagmail.projecte1.activities.Logout;
 import com.davidhernandezvilaltagmail.projecte1.activities.Calculator;
+import com.davidhernandezvilaltagmail.projecte1.activities.Mediaplayer;
 
 public abstract class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -31,6 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
     {
         m = new ArrayMap<>();
+        m.put(R.id.mediaplayer, Mediaplayer.class);
         m.put(R.id.activity2, Activity2.class);
         m.put(R.id.activity3, Logout.class);
         m.put(R.id.calculator, Calculator.class);

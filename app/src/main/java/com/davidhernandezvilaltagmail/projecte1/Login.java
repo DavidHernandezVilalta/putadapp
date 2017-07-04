@@ -5,20 +5,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.davidhernandezvilaltagmail.projecte1.R;
-import com.davidhernandezvilaltagmail.projecte1.BaseActivity;
 import com.davidhernandezvilaltagmail.projecte1.activities.Activity2;
 import com.davidhernandezvilaltagmail.projecte1.activities.Calculator;
 import com.davidhernandezvilaltagmail.projecte1.activities.ForgottenPassword;
 import com.davidhernandezvilaltagmail.projecte1.activities.Loginfail;
-import com.davidhernandezvilaltagmail.projecte1.activities.Signup;
 import com.davidhernandezvilaltagmail.projecte1.database.MyDataBaseHelper;
 
 
@@ -55,16 +51,16 @@ public class Login extends AppCompatActivity{
             signup.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    /*if (username == null||password == null){
+                    if (username == null||password == null){
                         Toast.makeText(getApplicationContext(), "Falta algun camp per emplenar", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     String s = username.getText().toString();
                     String s1 = password.getText().toString();
                     long id = myDataBaseHelper.createRow(s, s1);
-                    Toast.makeText(v.getContext(),"Has singejat in!!", Toast.LENGTH_SHORT).show();*/
-                    Intent i = new Intent(getApplicationContext(), Signup.class);
-                    startActivity(i);
+                    Toast.makeText(v.getContext(),"Has singejat in!!", Toast.LENGTH_SHORT).show();
+                    /*Intent i = new Intent(getApplicationContext(), Signup.class);
+                    startActivity(i);*/
                 }
             });
             login.setOnClickListener(new View.OnClickListener(){
@@ -84,7 +80,6 @@ public class Login extends AppCompatActivity{
                         editor.putBoolean("logged", true);
                         editor.apply();
                         Intent i = new Intent(getApplicationContext(), Activity2.class);
-                        finish();
                         startActivity(i);
                     }
                     else if (myDataBaseHelper.queryUser(s).equals("0")) Toast.makeText(v.getContext(), "Incorrect password", Toast.LENGTH_LONG).show();

@@ -14,6 +14,11 @@
                     android:checkable="true"
                     android:title="Activity2" />
                 <item
+                    android:id="@+id/mediaplayer"
+                    android:icon="@drawable/ic_music_player"
+                    android:checkable="true"
+                    android:title="Media Player"/>
+                <item
                     android:icon="@drawable/ic_exit2"
                     android:id="@+id/activity3"
                     android:checkable="true"
