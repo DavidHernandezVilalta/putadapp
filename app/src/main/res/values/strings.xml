@@ -3,4 +3,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="passforg"><u>Forgotten password?</u></string>
+    <string name="signuptitol"><b>Sign Up</b></string>
+
 </resources>
