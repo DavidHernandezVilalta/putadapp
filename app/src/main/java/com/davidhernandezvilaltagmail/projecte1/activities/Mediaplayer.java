@@ -24,35 +24,41 @@ public class Mediaplayer extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_media_player);
-        setTitle("activity_mediaplayer");
+        setTitle("activity_media_player");
         setItemChecked();
         cif = new CoolImageFlipper(this);
-        playimage = getResources().getDrawable(R.drawable.ic_play_button);
-        pauseimage = getResources().getDrawable(R.drawable.ic_pause);
+        playimage = getResources().getDrawable(R.drawable.play);
+        pauseimage = getResources().getDrawable(R.drawable.pause);
         mp = MediaPlayer.create(this, R.raw.d);
-        pause = (Button) findViewById(R.id.pause);
+        /*pause = (Button) findViewById(R.id.pause);
         play = (Button) findViewById(R.id.play);
         play.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                mp.pause();
-            }
-        });
-        pause.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mp.start();
             }
         });
-    }/*
+        pause.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mp.pause();
+            }
+        });*/
+    }
     public void foodClicked(View view) {
-        if (sona)
+        if (sona){
             cif.flipImage(playimage, ((ImageView) view));
-        else
+            mp.pause();
+        }
+        else{
             cif.flipImage(pauseimage, ((ImageView) view));
+            mp.start();
+        }
 
         sona = !sona;
-    }*/
+    }
     @Override
     protected int whatIsMyId() {
         return R.id.mediaplayer;
     }
+
+
 }

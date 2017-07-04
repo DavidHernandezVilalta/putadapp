@@ -22,7 +22,7 @@ public class Login extends AppCompatActivity{
     TextView tv;
     Button login, signup;
     EditText username, password;
-    private MyDataBaseHelper myDataBaseHelper;
+    protected MyDataBaseHelper myDataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +51,16 @@ public class Login extends AppCompatActivity{
             signup.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    if (username == null||password == null){
+                   /* if (username == null||password == null){
                         Toast.makeText(getApplicationContext(), "Falta algun camp per emplenar", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     String s = username.getText().toString();
                     String s1 = password.getText().toString();
                     long id = myDataBaseHelper.createRow(s, s1);
-                    Toast.makeText(v.getContext(),"Has singejat in!!", Toast.LENGTH_SHORT).show();
-                    /*Intent i = new Intent(getApplicationContext(), Signup.class);
-                    startActivity(i);*/
+                    Toast.makeText(v.getContext(),"Has singejat in!!", Toast.LENGTH_SHORT).show();*/
+                    Intent i = new Intent(getApplicationContext(), Signup.class);
+                    startActivity(i);
                 }
             });
             login.setOnClickListener(new View.OnClickListener(){
@@ -92,7 +92,7 @@ public class Login extends AppCompatActivity{
             });
         }
         else {
-            Intent i = new Intent(getApplicationContext(), Calculator.class);
+            Intent i = new Intent(getApplicationContext(), Activity2.class);
             startActivity(i);
         }
     }

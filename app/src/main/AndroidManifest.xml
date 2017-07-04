@@ -40,7 +40,12 @@
         <activity
             android:name=".Signup"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.MediaPlayer"></activity>
+        <activity
+            android:name=".activities.Mediaplayer"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.Memory"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
