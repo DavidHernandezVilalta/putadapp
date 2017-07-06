@@ -5,14 +5,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.davidhernandezvilaltagmail.projecte1.activities.Activity2;
-import com.davidhernandezvilaltagmail.projecte1.activities.Calculator;
+import com.davidhernandezvilaltagmail.projecte1.activities.Profile;
 import com.davidhernandezvilaltagmail.projecte1.activities.ForgottenPassword;
 import com.davidhernandezvilaltagmail.projecte1.activities.Loginfail;
 import com.davidhernandezvilaltagmail.projecte1.database.MyDataBaseHelper;
@@ -22,7 +22,7 @@ public class Login extends AppCompatActivity{
     TextView tv;
     Button login, signup;
     EditText username, password;
-    protected MyDataBaseHelper myDataBaseHelper;
+    MyDataBaseHelper myDataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +30,11 @@ public class Login extends AppCompatActivity{
         setContentView(R.layout.login_activity);
         setTitle("Login");
 
-        SharedPreferences settings = getSharedPreferences("SharedLogin", Context.MODE_PRIVATE);
+       SharedPreferences settings = getSharedPreferences("SharedLogin", Context.MODE_PRIVATE);
         boolean islogged = settings.getBoolean("logged", false);
+        String userlogged = settings.getString("userlogged", "noname");
         if (!islogged) {
             username = (EditText) findViewById(R.id.username);
-
             myDataBaseHelper = MyDataBaseHelper.getInstance(this);
             tv = (TextView) findViewById(R.id.passwordforg);
             tv.setText(R.string.passforg);
@@ -78,8 +78,11 @@ public class Login extends AppCompatActivity{
                         SharedPreferences settings = getSharedPreferences("SharedLogin", 0);
                         SharedPreferences.Editor editor = settings.edit();
                         editor.putBoolean("logged", true);
+                        editor.putString("userlogged", s);
                         editor.apply();
-                        Intent i = new Intent(getApplicationContext(), Activity2.class);
+                        finish();
+                        Intent i = new Intent(getApplicationContext(), Profile.class);
+                        i.putExtra("usuario", s);
                         startActivity(i);
                     }
                     else if (myDataBaseHelper.queryUser(s).equals("0")) Toast.makeText(v.getContext(), "Incorrect password", Toast.LENGTH_LONG).show();
@@ -92,7 +95,8 @@ public class Login extends AppCompatActivity{
             });
         }
         else {
-            Intent i = new Intent(getApplicationContext(), Activity2.class);
+            finish();
+            Intent i = new Intent(getApplicationContext(), Profile.class);
             startActivity(i);
         }
     }

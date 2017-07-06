@@ -2,8 +2,10 @@ package com.davidhernandezvilaltagmail.projecte1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.util.ArrayMap;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,27 +16,30 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.davidhernandezvilaltagmail.projecte1.activities.Activity2;
+import com.davidhernandezvilaltagmail.projecte1.activities.Profile;
 import com.davidhernandezvilaltagmail.projecte1.activities.Logout;
 import com.davidhernandezvilaltagmail.projecte1.activities.Calculator;
 import com.davidhernandezvilaltagmail.projecte1.activities.Mediaplayer;
 import com.davidhernandezvilaltagmail.projecte1.activities.Memory;
+import com.davidhernandezvilaltagmail.projecte1.database.MyDataBaseHelper;
+
 
 public abstract class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar toolbar;
     DrawerLayout drawer;
-    NavigationView navigationView;
+    public NavigationView navigationView;
     ArrayMap <Integer, Class> m,n;
     private CharSequence mDrawerTitle, mTitle;
-
+    public MyDataBaseHelper myDataBaseHelper;
 
     {
         m = new ArrayMap<>();
         m.put(R.id.memory, Memory.class);
         m.put(R.id.mediaplayer, Mediaplayer.class);
-        m.put(R.id.activity2, Activity2.class);
+        m.put(R.id.profile, Profile.class);
         m.put(R.id.activity3, Logout.class);
         m.put(R.id.calculator, Calculator.class);
 

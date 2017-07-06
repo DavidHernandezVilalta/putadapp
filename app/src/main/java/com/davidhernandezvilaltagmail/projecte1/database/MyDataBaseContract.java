@@ -22,6 +22,7 @@ public final class MyDataBaseContract {
         //public static final String COLUMN_ID = "id"; <- Actually we don't need a dedicated COLUMN_ID
         //because this class implements BaseColumns which has a _ID constant for that
         public static final String PASSWORD = "password";
+        public static final String RECORD = "record";
     }
 
     //Declare here other inner classes for other tables in the database using the same format

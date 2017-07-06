@@ -5,18 +5,20 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
+                    android:icon="@drawable/ic_user_image_with_black_background"
+                    android:id="@+id/profile"
+                    android:checkable="true"
+                    android:title="Profile" />
+                <item
                     android:icon="@drawable/ic_calculator"
                     android:id="@+id/calculator"
                     android:checkable="true"
                     android:title="Calculator" />
                 <item
+                    android:icon="@drawable/ic_puzzle"
                     android:id="@+id/memory"
                     android:checkable="true"
                     android:title="Memory"/>
-                <item
-                    android:id="@+id/activity2"
-                    android:checkable="true"
-                    android:title="Activity2" />
                 <item
                     android:id="@+id/mediaplayer"
                     android:icon="@drawable/ic_music_player"

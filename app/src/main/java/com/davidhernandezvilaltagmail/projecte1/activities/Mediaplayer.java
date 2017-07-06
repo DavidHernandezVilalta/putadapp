@@ -30,18 +30,6 @@ public class Mediaplayer extends BaseActivity {
         playimage = getResources().getDrawable(R.drawable.play);
         pauseimage = getResources().getDrawable(R.drawable.pause);
         mp = MediaPlayer.create(this, R.raw.d);
-        /*pause = (Button) findViewById(R.id.pause);
-        play = (Button) findViewById(R.id.play);
-        play.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                mp.start();
-            }
-        });
-        pause.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                mp.pause();
-            }
-        });*/
     }
     public void foodClicked(View view) {
         if (sona){

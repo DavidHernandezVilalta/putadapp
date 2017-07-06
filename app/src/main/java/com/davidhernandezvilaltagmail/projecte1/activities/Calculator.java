@@ -6,6 +6,7 @@ import android.app.TaskStackBuilder;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.davidhernandezvilaltagmail.projecte1.Login;
 import com.davidhernandezvilaltagmail.projecte1.R;
 import com.davidhernandezvilaltagmail.projecte1.BaseActivity;
 
@@ -54,6 +56,14 @@ public class Calculator extends BaseActivity implements View.OnClickListener {
                 item.setChecked(true);
                 toastejo = false;
                 return true;
+            case R.id.logoutoptions:
+                finish();
+                SharedPreferences settings = getSharedPreferences("SharedLogin", 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putBoolean("logged", false);
+                editor.apply();
+                Intent i1 = new Intent(getApplicationContext(), Login.class);
+                startActivity(i1);
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -401,5 +411,11 @@ public class Calculator extends BaseActivity implements View.OnClickListener {
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
     }
 }
