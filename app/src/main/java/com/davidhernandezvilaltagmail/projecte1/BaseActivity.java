@@ -49,7 +49,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.activity_base);/*
+        super.setContentView(R.layout.activity_base);
+        myDataBaseHelper = MyDataBaseHelper.getInstance(this);/*
         iv = (ImageView) findViewById(R.id.imageView);
         iv.setImageResource(R.mipmap.shenronandgoku);*/
         setView();
@@ -104,6 +105,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         if(id != whatIsMyId()){
             switch (id){
                 default:
+                    finish();
                     startActivity(new Intent(getApplicationContext(),m.get(id)));
                     break;
             }

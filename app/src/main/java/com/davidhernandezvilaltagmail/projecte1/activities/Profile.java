@@ -1,5 +1,6 @@
 package com.davidhernandezvilaltagmail.projecte1.activities;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,12 +20,15 @@ import com.davidhernandezvilaltagmail.projecte1.R;
 import com.davidhernandezvilaltagmail.projecte1.database.MyDataBaseHelper;
 
 import java.io.IOException;
+import java.util.List;
 
-import static com.davidhernandezvilaltagmail.projecte1.R.id.username;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
-public class Profile extends BaseActivity {
+
+public class Profile extends BaseActivity implements EasyPermissions.PermissionCallbacks  {
     ImageView perfil, avatar;
-    TextView userprofile, usernameheader, bestscore;
+    TextView userprofile, nameheader, bestscore;
     EditText userneim;
     Uri selectedImage = null;
     @Override
@@ -36,21 +40,21 @@ public class Profile extends BaseActivity {
         perfil = (ImageView) findViewById(R.id.perfilemtpy);
         perfil.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                Intent getImageAsContent = new Intent(Intent.ACTION_GET_CONTENT, null);
-                getImageAsContent.setType("image/*");
-                startActivityForResult(getImageAsContent, 1);
+                //PermissionUtils.checkReadExternalStoragePermissions(activity,MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                requestCameraPermission();
+                changeProfile();
             }
         });
         userprofile = (TextView) findViewById(R.id.usernameprofile);
         SharedPreferences settings = getSharedPreferences("SharedLogin", 0);
         String userlogged = settings.getString("userlogged", "noname");
-        String imatgeselec = settings.getString("uri", "null");
+        String imatgeselec = settings.getString("uri", null);
         userprofile.append(userlogged);
         View navHeaderView = navigationView.getHeaderView(0);
-        usernameheader = (TextView) navHeaderView.findViewById(R.id.usernameheader);
-        usernameheader.setText(userlogged);
+        nameheader = (TextView) navHeaderView.findViewById(R.id.nameheader);
+        nameheader.setText(userlogged);
         avatar = (ImageView) navHeaderView.findViewById(R.id.avatar);/*
-        if (!imatgeselec.equals("null")) {
+        if (imatgeselec != null) {
             selectedImage = Uri.parse(imatgeselec);
             try {
                 perfil.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage));
@@ -58,13 +62,56 @@ public class Profile extends BaseActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }*//*
+        }*/
         bestscore = (TextView) findViewById(R.id.bestscore);
         if (myDataBaseHelper.queryUser(userlogged).equals("0")) {
             String record = myDataBaseHelper.queryRecord(userlogged);
-            if (record.equals("infinity")) bestscore.setText("NEVER SCORED");
-            else bestscore.setText(record);
-        }*/
+            if (record.equals("infinity")) bestscore.setText("Memory Best Score: Never Scored");
+            else bestscore.setText("Memory Best Score: " + record);
+        }
+    }
+
+    private void requestCameraPermission() {
+        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            // Already have permission, do the thing
+            // ...
+            changeProfile();
+        } else {
+            // Do not have permissions, request them now
+            EasyPermissions.requestPermissions(this, "FUCK", 0, perms);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> list) {
+        // Some permissions have been granted
+        // ...
+        changeProfile();
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> list) {
+        // Some permissions have been denied
+        // ...
+
+    }
+
+    private void changeProfile() {
+        Intent pickAnImage = new Intent(
+                Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickAnImage.setType("image/*");
+
+        startActivityForResult(pickAnImage, 2);
     }
 
 
@@ -93,6 +140,11 @@ public class Profile extends BaseActivity {
         }else{
             Log.v("Result","Something happened");
         }
+    }
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
     }
 
     @Override

@@ -362,7 +362,7 @@ public class Memory extends BaseActivity {
                     }
                     if (numcorrectes == 8) {
                         final Context context = this;
-/*
+
                         SharedPreferences settings = getSharedPreferences("SharedLogin", 0);
                         String userlogged = settings.getString("userlogged", "noname");
                         String moves = moviments.getText().toString();
@@ -371,7 +371,7 @@ public class Memory extends BaseActivity {
                             if (record.equals("infinity")) myDataBaseHelper.updateRecord(moves, userlogged);
                             else if (Integer.parseInt(record) > Integer.parseInt(moves)) myDataBaseHelper.updateRecord(moves, userlogged);
                         }
-*/
+
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                         alertDialogBuilder.setTitle("YOU FINISHED THE GAME!!");
                         alertDialogBuilder
@@ -391,6 +391,8 @@ public class Memory extends BaseActivity {
                                         // if this button is clicked, just close
                                         // the dialog box and do nothing
                                         finish();
+                                        Intent i = new Intent(getApplicationContext(), Profile.class);
+                                        startActivity(i);
                                     }
                                 });
                         AlertDialog alertDialog = alertDialogBuilder.create();

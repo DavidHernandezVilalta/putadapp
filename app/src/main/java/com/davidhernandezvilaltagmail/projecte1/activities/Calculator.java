@@ -30,12 +30,21 @@ import static android.R.attr.duration;
 public class Calculator extends BaseActivity implements View.OnClickListener {
     Button b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16, b17, b18, b19;
     TextView ops, res;
+    MenuItem itemset = null;
+    int itemaux = 0;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.base,menu);
+        Log.v("eieiei.entroooo", Integer.toString(itemaux));
+        if (itemaux != 0) {
+            Log.v("eieiei", "setejo");
+            menu.findItem(itemaux).setChecked(true);
+        }
         return true;
     }
     final Context context = this;
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -50,10 +59,13 @@ public class Calculator extends BaseActivity implements View.OnClickListener {
                 return true;
             case R.id.toastejar:
                 item.setChecked(true);
+                itemaux = item.getItemId();
                 toastejo = true;
                 return true;
             case R.id.estatejar:
                 item.setChecked(true);
+                itemaux = item.getItemId();
+                Log.v("eieiei.set", Integer.toString(itemaux));
                 toastejo = false;
                 return true;
             case R.id.logoutoptions:
@@ -83,6 +95,9 @@ public class Calculator extends BaseActivity implements View.OnClickListener {
         hihazero = savedInstanceState.getBoolean("hihazero");
         hihaop = savedInstanceState.getBoolean("hihaop");
         simbol = savedInstanceState.getString("simbol");
+        toastejo = savedInstanceState.getBoolean("toastejo");
+        itemaux = savedInstanceState.getInt("item");
+        Log.v("eieiei.restore", Integer.toString(itemaux));
     }
     @Override
     protected void onSaveInstanceState(Bundle outstate){
@@ -97,6 +112,9 @@ public class Calculator extends BaseActivity implements View.OnClickListener {
         outstate.putBoolean("hihazero", hihazero);
         outstate.putBoolean("hihacoma", hihacoma);
         outstate.putBoolean("hihaop", hihaop);
+        outstate.putBoolean("toastejo", toastejo);
+        Log.v("eieiei.save", Integer.toString(itemaux));
+        outstate.putInt("item", itemaux);
     }
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +167,7 @@ public class Calculator extends BaseActivity implements View.OnClickListener {
         b17.setOnClickListener(this);
         b18.setOnClickListener(this);
         b19.setOnClickListener(this);
+
     }
 
     @Override
