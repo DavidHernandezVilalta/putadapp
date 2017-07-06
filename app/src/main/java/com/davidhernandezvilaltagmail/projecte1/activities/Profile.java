@@ -1,13 +1,11 @@
 package com.davidhernandezvilaltagmail.projecte1.activities;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.NavigationView;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -15,16 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.davidhernandezvilaltagmail.projecte1.BaseActivity;
-import com.davidhernandezvilaltagmail.projecte1.Login;
 import com.davidhernandezvilaltagmail.projecte1.R;
-import com.davidhernandezvilaltagmail.projecte1.database.MyDataBaseHelper;
 
 import java.io.IOException;
 import java.util.List;
 
-import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
-
 
 public class Profile extends BaseActivity implements EasyPermissions.PermissionCallbacks  {
     ImageView perfil, avatar;
