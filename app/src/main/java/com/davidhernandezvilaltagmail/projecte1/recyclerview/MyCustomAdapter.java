@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.davidhernandezvilaltagmail.projecte1.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by David Hdez on 07/07/2017.
@@ -19,29 +20,16 @@ import java.util.ArrayList;
 public class MyCustomAdapter extends RecyclerView.Adapter<MyCustomAdapter.AdapterViewHolder>{
 
     ArrayList<Contract> contactos;
-
-    MyCustomAdapter(){
+    MyCustomAdapter(List<String> noms, List<String> records){
         contactos = new ArrayList<>();
-        contactos.add(new Contract(0,"Benito Camela","123456789"));
-        contactos.add(new Contract(0,"Alberto Carlos Huevos","123456789"));
-        contactos.add(new Contract(1,"Lola Mento","123456789"));
-        contactos.add(new Contract(0,"Aitor Tilla","123456789"));
-        contactos.add(new Contract(0,"Elvis Teck","123456789"));
-        contactos.add(new Contract(1,"Débora Dora","123456789"));
-        contactos.add(new Contract(0,"Borja Món de York","123456789"));
-        contactos.add(new Contract(1,"Encarna Vales","123456789"));
-        contactos.add(new Contract(0,"Enrique Cido","123456789"));
-        contactos.add(new Contract(0,"Francisco Jones","123456789"));
-        contactos.add(new Contract(1,"Estela Gartija","123456789"));
-        contactos.add(new Contract(0,"Andrés Trozado","123456789"));
-        contactos.add(new Contract(0,"Carmelo Cotón","123456789"));
-        contactos.add(new Contract(0,"Alberto Mate","123456789"));
-        contactos.add(new Contract(0,"Chema Pamundi","123456789"));
-        contactos.add(new Contract(0,"Armando Adistancia","123456789"));
-        contactos.add(new Contract(1,"Helena Nito Del Bosque","123456789"));
-        contactos.add(new Contract(0,"Unai Nomás","123456789"));
-        contactos.add(new Contract(1,"Ester Colero","123456789"));
-        contactos.add(new Contract(0,"Marcos Corrón","123456789"));
+        for(int i = 0; i < noms.size(); i++) {
+            String nom = noms.get(i);
+            String record = records.get(i);
+            if (i == 0) contactos.add(new Contract(0, nom, record));
+            else if (i == 1) contactos.add(new Contract(1, nom, record));
+            else if (i == 2) contactos.add(new Contract(2, nom, record));
+            else contactos.add(new Contract(3, nom, record));
+        }
     }
 
 
@@ -62,11 +50,19 @@ public class MyCustomAdapter extends RecyclerView.Adapter<MyCustomAdapter.Adapte
         switch (iconLayout){
             case 0:
                 //male
-                adapterViewholder.icon.setImageDrawable(adapterViewholder.v.getResources().getDrawable(R.drawable.ic_exit));
+                adapterViewholder.icon.setImageDrawable(adapterViewholder.v.getResources().getDrawable(R.drawable.ic_crown));
                 break;
             case 1:
                 //female
-                adapterViewholder.icon.setImageDrawable(adapterViewholder.v.getResources().getDrawable(R.drawable.ic_exit2));
+                adapterViewholder.icon.setImageDrawable(adapterViewholder.v.getResources().getDrawable(R.drawable.ic_corona_plata));
+                break;
+            case 2:
+                //female
+                adapterViewholder.icon.setImageDrawable(adapterViewholder.v.getResources().getDrawable(R.drawable.ic_corona_bronze));
+                break;
+            case 3:
+                //female
+                adapterViewholder.icon.setImageDrawable(adapterViewholder.v.getResources().getDrawable(R.drawable.ic_pokeball));
                 break;
         }
         adapterViewholder.name.setText(contactos.get(position).getName());

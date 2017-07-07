@@ -16,6 +16,9 @@ import android.util.Log;
 
 import com.davidhernandezvilaltagmail.projecte1.activities.MyDataBaseContract;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MyDataBaseHelper extends SQLiteOpenHelper {
 
     /*
@@ -154,7 +157,6 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
     public String queryRecord(String user) {
         Cursor c;
-        Log.v("llego1", "ieeee");
         c = readable.query(MyDataBaseContract.Table1.TABLE_NAME,    //Table name
                 new String[] {MyDataBaseContract.Table1.RECORD},       //Columns we select
                 MyDataBaseContract.Table1.USER + " = ? ",             //Columns for the WHERE clause
@@ -164,7 +166,6 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
                 null);                                              //Sort
 
         String record = "null";
-        Log.v("llego2", "ieeee");
         if (c.moveToFirst()) {
             do {
                 //We go here if the cursor is not empty
@@ -174,10 +175,53 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
         //Always close the cursor after you finished using it
         c.close();
-        Log.v("llego3", "ieeee");
         return record;
     }
 
+
+    public List<String> queryAllUsers() {
+        Cursor c;
+        c = readable.query(MyDataBaseContract.Table1.TABLE_NAME,    //Table name
+                new String[]{MyDataBaseContract.Table1.USER},       //Columns we select
+                null,             //Columns for the WHERE clause
+                null,                                   //Values for the WHERE clause
+                null,                                               //Group By
+                null,                                               //Having
+                null);                                              //Sort
+        ArrayList<String> noms = new ArrayList<String>();
+        if (c.moveToFirst()) {
+            do {
+                //We go here if the cursor is not empty
+                String user = c.getString(c.getColumnIndex(MyDataBaseContract.Table1.USER));
+                noms.add(user);
+            } while (c.moveToNext());
+        }
+        c.close();
+        return noms;
+    }
+
+    public List<String> queryAllRecords() {
+        Cursor c;
+        c = readable.query(MyDataBaseContract.Table1.TABLE_NAME,    //Table name
+                new String[] {MyDataBaseContract.Table1.RECORD},       //Columns we select
+                null,             //Columns for the WHERE clause
+                null,                                   //Values for the WHERE clause
+                null,                                               //Group By
+                null,                                               //Having
+                null);                                              //Sort
+        ArrayList<String> records = new ArrayList<>();
+        if (c.moveToFirst()) {
+            do {
+                //We go here if the cursor is not empty
+                String record = c.getString(c.getColumnIndex(MyDataBaseContract.Table1.RECORD));
+                records.add(record);
+            } while (c.moveToNext());
+        }
+
+        //Always close the cursor after you finished using it
+        c.close();
+        return records;
+    }
 
     @Override
     public synchronized void close() {

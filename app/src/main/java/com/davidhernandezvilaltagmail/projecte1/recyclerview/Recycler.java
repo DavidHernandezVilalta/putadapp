@@ -1,18 +1,27 @@
 package com.davidhernandezvilaltagmail.projecte1.recyclerview;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.davidhernandezvilaltagmail.projecte1.BaseActivity;
 import com.davidhernandezvilaltagmail.projecte1.R;
+import com.davidhernandezvilaltagmail.projecte1.activities.Profile;
+import com.davidhernandezvilaltagmail.projecte1.database.MyDataBaseHelper;
+
+import java.util.List;
 
 public class Recycler extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayout;
+    MyDataBaseHelper myDataBaseHelper;
+    List<String> noms, records;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +42,12 @@ public class Recycler extends AppCompatActivity {
         //El adapter se encarga de  adaptar un objeto definido en el c�digo a una vista en xml
         //seg�n la estructura definida.
         //Asignamos nuestro custom Adapter
-        mRecyclerView.setAdapter(new MyCustomAdapter());
+        myDataBaseHelper = MyDataBaseHelper.getInstance(this);
+        List<String> noms = null, records = null;
+        Log.v("llego", "ndosnvo");
+        noms = myDataBaseHelper.queryAllUsers();
+        records = myDataBaseHelper.queryAllRecords();
+        mRecyclerView.setAdapter(new MyCustomAdapter(noms, records));
     }
 /*
     @Override
