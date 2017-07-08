@@ -17,7 +17,10 @@ import android.util.Log;
 import com.davidhernandezvilaltagmail.projecte1.activities.MyDataBaseContract;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class MyDataBaseHelper extends SQLiteOpenHelper {
 
@@ -102,6 +105,16 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         return afected;
     }
 
+    public void deleteRecords() {
+        ContentValues values = new ContentValues();
+        values.put(MyDataBaseContract.Table1.RECORD, "infinity");
+        int rows_afected = writable.update(MyDataBaseContract.Table1.TABLE_NAME,    //Table name
+                values,                                                             //New value for columns
+                null,                 //Selection args
+                null);                                                  //Selection values
+
+    }
+
     public String queryRow(String s, String s1) {
         Cursor c;
         c = readable.query(MyDataBaseContract.Table1.TABLE_NAME,    //Table name
@@ -179,48 +192,29 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public List<String> queryAllUsers() {
+    public HashMap<String, String> queryAll() {
         Cursor c;
         c = readable.query(MyDataBaseContract.Table1.TABLE_NAME,    //Table name
-                new String[]{MyDataBaseContract.Table1.USER},       //Columns we select
+                new String[] {MyDataBaseContract.Table1.RECORD, MyDataBaseContract.Table1.USER},       //Columns we select
                 null,             //Columns for the WHERE clause
                 null,                                   //Values for the WHERE clause
                 null,                                               //Group By
                 null,                                               //Having
                 null);                                              //Sort
-        ArrayList<String> noms = new ArrayList<String>();
+        HashMap<String, String> all = new HashMap<>();
         if (c.moveToFirst()) {
             do {
                 //We go here if the cursor is not empty
                 String user = c.getString(c.getColumnIndex(MyDataBaseContract.Table1.USER));
-                noms.add(user);
-            } while (c.moveToNext());
-        }
-        c.close();
-        return noms;
-    }
-
-    public List<String> queryAllRecords() {
-        Cursor c;
-        c = readable.query(MyDataBaseContract.Table1.TABLE_NAME,    //Table name
-                new String[] {MyDataBaseContract.Table1.RECORD},       //Columns we select
-                null,             //Columns for the WHERE clause
-                null,                                   //Values for the WHERE clause
-                null,                                               //Group By
-                null,                                               //Having
-                null);                                              //Sort
-        ArrayList<String> records = new ArrayList<>();
-        if (c.moveToFirst()) {
-            do {
-                //We go here if the cursor is not empty
+                Log.v("Usuari", user);
                 String record = c.getString(c.getColumnIndex(MyDataBaseContract.Table1.RECORD));
-                records.add(record);
+                all.put(user, record);
             } while (c.moveToNext());
         }
 
         //Always close the cursor after you finished using it
         c.close();
-        return records;
+        return all;
     }
 
     @Override

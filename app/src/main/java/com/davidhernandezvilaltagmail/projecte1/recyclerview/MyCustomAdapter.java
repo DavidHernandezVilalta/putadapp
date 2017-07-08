@@ -11,7 +11,13 @@ import android.widget.TextView;
 import com.davidhernandezvilaltagmail.projecte1.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 /**
  * Created by David Hdez on 07/07/2017.
@@ -20,18 +26,52 @@ import java.util.List;
 public class MyCustomAdapter extends RecyclerView.Adapter<MyCustomAdapter.AdapterViewHolder>{
 
     ArrayList<Contract> contactos;
-    MyCustomAdapter(List<String> noms, List<String> records){
+    MyCustomAdapter(HashMap<String, String> all){
         contactos = new ArrayList<>();
-        for(int i = 0; i < noms.size(); i++) {
-            String nom = noms.get(i);
-            String record = records.get(i);
+        all = sortHashMapByValues(all);
+        int i = 0;
+        for(HashMap.Entry<String,String> entry : all.entrySet()) {
+            String nom = entry.getKey();
+            String record = entry.getValue();
+            if (record.equals("infinity")) record = "UNSCORED";
+            Log.v("User", nom);
             if (i == 0) contactos.add(new Contract(0, nom, record));
             else if (i == 1) contactos.add(new Contract(1, nom, record));
             else if (i == 2) contactos.add(new Contract(2, nom, record));
             else contactos.add(new Contract(3, nom, record));
+            ++i;
         }
     }
 
+    public LinkedHashMap<String, String> sortHashMapByValues(
+            HashMap<String, String> passedMap) {
+        List<String> mapKeys = new ArrayList<>(passedMap.keySet());
+        List<String> mapValues = new ArrayList<>(passedMap.values());
+        Collections.sort(mapValues);
+        Collections.sort(mapKeys);
+
+        LinkedHashMap<String, String> sortedMap =
+                new LinkedHashMap<>();
+
+        Iterator<String> valueIt = mapValues.iterator();
+        while (valueIt.hasNext()) {
+            String val = valueIt.next();
+            Iterator<String> keyIt = mapKeys.iterator();
+
+            while (keyIt.hasNext()) {
+                String key = keyIt.next();
+                String comp1 = passedMap.get(key);
+                String comp2 = val;
+
+                if (comp1.equals(comp2)) {
+                    keyIt.remove();
+                    sortedMap.put(key, val);
+                    break;
+                }
+            }
+        }
+        return sortedMap;
+    }
 
     @Override
     public MyCustomAdapter.AdapterViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {

@@ -38,7 +38,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
     {
         m = new ArrayMap<>();
-        m.put(R.id.recycler, Recycler.class);        m.put(R.id.memory, Memory.class);
+        m.put(R.id.recycler, Recycler.class);
+        m.put(R.id.memory, Memory.class);
         m.put(R.id.mediaplayer, Mediaplayer.class);
         m.put(R.id.profile, Profile.class);
         m.put(R.id.activity3, Logout.class);

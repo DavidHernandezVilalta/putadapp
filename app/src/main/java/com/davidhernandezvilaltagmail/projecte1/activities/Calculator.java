@@ -30,15 +30,17 @@ import static android.R.attr.duration;
 public class Calculator extends BaseActivity implements View.OnClickListener {
     Button b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16, b17, b18, b19;
     TextView ops, res;
-    MenuItem itemset = null;
+    protected Boolean hihazero = false, hihacoma = false, hihaop = false, toastejo = true;
+    protected String num1 = null, num2 = null, simbol = null, ans = null;
     int itemaux = 0;
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        SharedPreferences settings = getSharedPreferences("SharedLogin", 0);
+        itemaux = settings.getInt("itemaux", 0);
         getMenuInflater().inflate(R.menu.base,menu);
-        Log.v("eieiei.entroooo", Integer.toString(itemaux));
         if (itemaux != 0) {
-            Log.v("eieiei", "setejo");
             menu.findItem(itemaux).setChecked(true);
         }
         return true;
@@ -47,6 +49,8 @@ public class Calculator extends BaseActivity implements View.OnClickListener {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        SharedPreferences settings = getSharedPreferences("SharedLogin", 0);
+        SharedPreferences.Editor editor = settings.edit();
         switch (item.getItemId()) {
             case R.id.trucar:
                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:689073760"));
@@ -59,19 +63,23 @@ public class Calculator extends BaseActivity implements View.OnClickListener {
                 return true;
             case R.id.toastejar:
                 item.setChecked(true);
+                editor.putBoolean("toastejo", true);
+                editor.putInt("itemaux", itemaux);
+                editor.apply();
                 itemaux = item.getItemId();
                 toastejo = true;
                 return true;
             case R.id.estatejar:
-                item.setChecked(true);
                 itemaux = item.getItemId();
+                editor.putInt("itemaux", itemaux);
+                editor.putBoolean("toastejo", false);
+                editor.apply();
+                item.setChecked(true);
                 Log.v("eieiei.set", Integer.toString(itemaux));
                 toastejo = false;
                 return true;
             case R.id.logoutoptions:
                 finish();
-                SharedPreferences settings = getSharedPreferences("SharedLogin", 0);
-                SharedPreferences.Editor editor = settings.edit();
                 editor.putBoolean("logged", false);
                 editor.apply();
                 Intent i1 = new Intent(getApplicationContext(), Login.class);
@@ -97,7 +105,6 @@ public class Calculator extends BaseActivity implements View.OnClickListener {
         simbol = savedInstanceState.getString("simbol");
         toastejo = savedInstanceState.getBoolean("toastejo");
         itemaux = savedInstanceState.getInt("item");
-        Log.v("eieiei.restore", Integer.toString(itemaux));
     }
     @Override
     protected void onSaveInstanceState(Bundle outstate){
@@ -113,7 +120,6 @@ public class Calculator extends BaseActivity implements View.OnClickListener {
         outstate.putBoolean("hihacoma", hihacoma);
         outstate.putBoolean("hihaop", hihaop);
         outstate.putBoolean("toastejo", toastejo);
-        Log.v("eieiei.save", Integer.toString(itemaux));
         outstate.putInt("item", itemaux);
     }
 
@@ -121,6 +127,8 @@ public class Calculator extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         int rotation = display.getRotation();
+        SharedPreferences settings = getSharedPreferences("SharedLogin", 0);
+        toastejo = settings.getBoolean("toastejo", false);
         if (rotation == 0) setContentView(R.layout.activity_calculator);
         else setContentView(R.layout.activity_calculator_landscape);
         setTitle("Calculator");
@@ -174,9 +182,6 @@ public class Calculator extends BaseActivity implements View.OnClickListener {
     protected int whatIsMyId() {
         return R.id.calculator;
     }
-
-    protected Boolean hihazero = false, hihacoma = false, hihaop = false, toastejo = true;
-    protected String num1 = null, num2 = null, simbol = null, ans = null;
 
     private void guardarnumero(String s) {
         if (s.equals("num1")) num1 = ops.getText().toString();
