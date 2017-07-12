@@ -23,6 +23,7 @@ public final class MyDataBaseContract {
         //because this class implements BaseColumns which has a _ID constant for that
         public static final String PASSWORD = "password";
         public static final String RECORD = "record";
+        public static final String LASTNOT = "lastnot";
     }
 
     //Declare here other inner classes for other tables in the database using the same format

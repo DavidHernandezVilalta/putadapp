@@ -39,7 +39,8 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
                     MyDataBaseContract.Table1._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     MyDataBaseContract.Table1.USER + " TEXT UNIQUE," +
                     MyDataBaseContract.Table1.PASSWORD + " TEXT," +
-                    MyDataBaseContract.Table1.RECORD + " TEXT)";
+                    MyDataBaseContract.Table1.RECORD + " TEXT," +
+                    MyDataBaseContract.Table1.LASTNOT + " TEXT)";
 
     private static final String SQL_DELETE_TABLE1 =
             "DROP TABLE IF EXISTS " + MyDataBaseContract.Table1.TABLE_NAME;
@@ -82,6 +83,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         values.put(MyDataBaseContract.Table1.USER,s);
         values.put(MyDataBaseContract.Table1.PASSWORD, s1);
         values.put(MyDataBaseContract.Table1.RECORD, "infinity");
+        values.put(MyDataBaseContract.Table1.LASTNOT, "ANY");
         long newId = writable.insert(MyDataBaseContract.Table1.TABLE_NAME,null,values);
         return newId;
     }
@@ -89,6 +91,17 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
     public int updateRecord(String newrrecord, String user) {
         ContentValues values = new ContentValues();
         values.put(MyDataBaseContract.Table1.RECORD, newrrecord);
+        int rows_afected = writable.update(MyDataBaseContract.Table1.TABLE_NAME,    //Table name
+                values,                                                             //New value for columns
+                MyDataBaseContract.Table1.USER + " LIKE ? ",                 //Selection args
+                new String[] {user});                                                  //Selection values
+
+        return rows_afected;
+    }
+
+    public int updateNotification(String not, String user) {
+        ContentValues values = new ContentValues();
+        values.put(MyDataBaseContract.Table1.LASTNOT, not);
         int rows_afected = writable.update(MyDataBaseContract.Table1.TABLE_NAME,    //Table name
                 values,                                                             //New value for columns
                 MyDataBaseContract.Table1.USER + " LIKE ? ",                 //Selection args
@@ -215,6 +228,29 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         //Always close the cursor after you finished using it
         c.close();
         return all;
+    }
+
+    public String queryNotification(String user) {
+        Cursor c;
+        c = readable.query(MyDataBaseContract.Table1.TABLE_NAME,    //Table name
+                new String[] {MyDataBaseContract.Table1.LASTNOT},       //Columns we select
+                MyDataBaseContract.Table1.USER + " = ? ",             //Columns for the WHERE clause
+                new String[] {user},                                   //Values for the WHERE clause
+                null,                                               //Group By
+                null,                                               //Having
+                null);                                              //Sort
+
+        String lastnot = "null";
+        if (c.moveToFirst()) {
+            do {
+                //We go here if the cursor is not empty
+                lastnot = c.getString(c.getColumnIndex(MyDataBaseContract.Table1.LASTNOT));
+            } while (c.moveToNext());
+        }
+
+        //Always close the cursor after you finished using it
+        c.close();
+        return lastnot;
     }
 
     @Override

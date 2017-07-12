@@ -48,7 +48,8 @@
             android:name=".activities.Memory"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".recyclerview.Recycler"></activity>
+        <activity android:name=".recyclerview.Recycler" />
+        <activity android:name=".activities.surprise"></activity>
     </application>
 
 </manifest>

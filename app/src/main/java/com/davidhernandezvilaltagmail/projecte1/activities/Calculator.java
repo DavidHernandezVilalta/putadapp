@@ -57,7 +57,7 @@ public class Calculator extends BaseActivity implements View.OnClickListener {
                 startActivity(intent);
                 return true;
             case R.id.chrome:
-                Uri uri = Uri.parse("http://www.pornhub.com/");
+                Uri uri = Uri.parse("http://www.apple.es/");
                 Intent intent1 = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent1);
                 return true;
@@ -235,10 +235,14 @@ public class Calculator extends BaseActivity implements View.OnClickListener {
                     }
                     if (num1.equals("Infinity")) {
                         res.setText("--> ∞");
+                        SharedPreferences settings = getSharedPreferences("SharedLogin", 0);
+                        String userlogged = settings.getString("userlogged", "noname");
                         if (toastejo){
+                            myDataBaseHelper.updateNotification("Ets de magisteri o que?", userlogged);
                             Toast.makeText(getApplicationContext(), "Ets de magisteri o que?", Toast.LENGTH_LONG).show();
                         }
                         else {
+                            myDataBaseHelper.updateNotification("Why dividing by 0? Stupid", userlogged);
                             //Instanciamos Notification Manager
                             NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 

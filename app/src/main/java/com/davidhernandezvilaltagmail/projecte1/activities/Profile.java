@@ -22,7 +22,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class Profile extends BaseActivity implements EasyPermissions.PermissionCallbacks  {
     ImageView perfil, avatar;
-    TextView userprofile, nameheader, bestscore;
+    TextView userprofile, nameheader, bestscore, lastnoti;
     EditText userneim;
     Uri selectedImage = null;
     @Override
@@ -39,15 +39,17 @@ public class Profile extends BaseActivity implements EasyPermissions.PermissionC
                 changeProfile();
             }
         });
+        lastnoti = (TextView) findViewById(R.id.lastnoti);
         userprofile = (TextView) findViewById(R.id.usernameprofile);
         SharedPreferences settings = getSharedPreferences("SharedLogin", 0);
         String userlogged = settings.getString("userlogged", "noname");
         String imatgeselec = settings.getString("uri", null);
         userprofile.append(userlogged);
+        lastnoti.append(myDataBaseHelper.queryNotification(userlogged));
         View navHeaderView = navigationView.getHeaderView(0);
         nameheader = (TextView) navHeaderView.findViewById(R.id.nameheader);
         nameheader.setText(userlogged);
-        avatar = (ImageView) navHeaderView.findViewById(R.id.avatar);/*
+        avatar = (ImageView) navHeaderView.findViewById(R.id.avatar);
         if (imatgeselec != null) {
             selectedImage = Uri.parse(imatgeselec);
             try {
@@ -56,7 +58,7 @@ public class Profile extends BaseActivity implements EasyPermissions.PermissionC
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }*/
+        }
         bestscore = (TextView) findViewById(R.id.bestscore);
         if (myDataBaseHelper.queryUser(userlogged).equals("0")) {
             String record = myDataBaseHelper.queryRecord(userlogged);

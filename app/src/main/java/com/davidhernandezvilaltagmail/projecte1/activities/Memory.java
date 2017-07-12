@@ -5,8 +5,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +21,7 @@ import com.davidhernandezvilaltagmail.projecte1.Login;
 import com.davidhernandezvilaltagmail.projecte1.R;
 import com.example.material.joanbarroso.flipper.CoolImageFlipper;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -38,6 +41,10 @@ public class Memory extends BaseActivity {
     Map<String, String> pkmnpos = new HashMap<String, String>();
     Set<String> posicions = new HashSet<String>();
     int numcorrectes = 0;
+
+    ImageView avatar;
+    TextView nameheader;
+    Uri selectedImage = null;
 
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,7 +89,23 @@ public class Memory extends BaseActivity {
         setItemChecked();
         new Thread(new Runnable() {
             @Override
-            public void run() {
+            public void run() {/*
+                SharedPreferences settings = getSharedPreferences("SharedLogin", 0);
+                String userlogged = settings.getString("userlogged", "noname");
+                String imatgeselec = settings.getString("uri", null);
+                View navHeaderView = navigationView.getHeaderView(0);
+                nameheader = (TextView) navHeaderView.findViewById(R.id.nameheader);
+                nameheader.setText(userlogged);
+                avatar = (ImageView) navHeaderView.findViewById(R.id.avatar);
+                if (imatgeselec != null) {
+                    selectedImage = Uri.parse(imatgeselec);
+                    try {
+                        avatar.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }*/
+
                 ispokflip.put("mudkip", "no");
                 ispokflip.put("torchic", "no");
                 ispokflip.put("treecko", "no");
@@ -370,6 +393,8 @@ public class Memory extends BaseActivity {
                             if (record.equals("infinity")) myDataBaseHelper.updateRecord(moves, userlogged);
                             else if (Integer.parseInt(record) > Integer.parseInt(moves)) myDataBaseHelper.updateRecord(moves, userlogged);
                         }
+
+                        myDataBaseHelper.updateNotification("YOU FINISHED THE GAME!!", userlogged);
 
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                         alertDialogBuilder.setTitle("YOU FINISHED THE GAME!!");

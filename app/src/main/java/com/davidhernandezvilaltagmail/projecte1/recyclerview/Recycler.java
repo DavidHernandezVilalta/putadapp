@@ -82,6 +82,13 @@ public class Recycler extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        Intent i = new Intent(getApplicationContext(), Profile.class);
+        startActivity(i);
+    }
+
     protected int whatIsMyId() {
     return R.id.recycler;
 }
